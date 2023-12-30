@@ -1,9 +1,20 @@
 {
-  "extends":"standard-with-typescript",
+  "extends":["standard-with-typescript", "plugin:prettier/recommended"],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
   "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 100,
+        "tabWidth": 2,
+        "singleQuote": true,
+        "trailingComma": "all",
+        "arrowParens": "always",
+        "semi": true
+      }
+    ],
     "@typescript-eslint/strict-boolean-expressions": "off"
   }
 }

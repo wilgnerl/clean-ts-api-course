@@ -11,10 +11,7 @@ export class AccountMongoRepository implements AddAccountRepository {
     const accountById = await accountCollection.findOne({
       _id: accountId,
     });
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const { _id, ...accountWithoutId } = accountById!;
-    return Object.assign({}, accountWithoutId, {
-      id: _id.toString(),
-    }) as AccountModel;
+
+    return MongoHelper.map(accountById);
   }
 }

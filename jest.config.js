@@ -6,6 +6,7 @@ module.exports = {
     '!<rootDir>/src/**/*-protocols.ts',
     '!**/protocols/**',
     '!**/test/**',
+    '!<rootDir>/src/@types/**',
   ],
   coverageDirectory: 'coverage',
   testEnvironment: '',

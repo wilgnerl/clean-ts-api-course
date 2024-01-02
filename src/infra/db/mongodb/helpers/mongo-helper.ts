@@ -17,17 +17,10 @@ export const MongoHelper = {
 
   async getCollection(name: string): Promise<Collection> {
     if (!this.client) {
-      if (!this.url) {
-        throw new Error('URL for MongoDB not defined.');
-      }
       await this.connect(this.url);
     }
 
-    if (!this.client) {
-      throw new Error('Client is not connected.');
-    }
-
-    return this.client.db().collection(name);
+    return this.client!.db().collection(name);
   },
 
   map: (collection: any): any => {

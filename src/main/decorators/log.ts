@@ -1,16 +1,20 @@
+import { type LogErrorRepository } from 'data/protocols/log-error-repository';
 import { type HttpRequest, type HttpResponse, type Controller } from '../../presentation/protocols';
 
 export class LogControllerDecorator implements Controller {
   private readonly controller: Controller;
+  private readonly logErrorRepository: LogErrorRepository;
 
-  constructor(controller: Controller) {
+  constructor(controller: Controller, logErrorRepository: LogErrorRepository) {
     this.controller = controller;
+    this.logErrorRepository = logErrorRepository;
   }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     const httpResponse = await this.controller.handle(httpRequest);
     if (httpResponse.statusCode === 500) {
-      console.error(500);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      await this.logErrorRepository.log(httpResponse.body.stack);
     }
     return httpResponse;
   }

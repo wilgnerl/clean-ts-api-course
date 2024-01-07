@@ -1,4 +1,4 @@
-import { MissingParamError } from '../../errors';
+import { InvalidParamError, MissingParamError } from '../../errors';
 import { badRequest, ok } from '../../helpers/http-helper';
 import {
   type HttpRequest,
@@ -23,10 +23,10 @@ export class LoginController implements Controller {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    this.emailValidator.isValid(httpRequest.body.email);
-    // if (!isValid) {
-    //   return badRequest(new InvalidParamError('email'));
-    // }
+    const isValid = this.emailValidator.isValid(httpRequest.body.email);
+    if (!isValid) {
+      return badRequest(new InvalidParamError('email'));
+    }
 
     return ok('');
   }
